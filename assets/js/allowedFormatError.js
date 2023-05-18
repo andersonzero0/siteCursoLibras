@@ -1,0 +1,1 @@
+alert('Erro! Formato de vídeo não permitido! Somente: mp4, m4v, webm, ogv!')
