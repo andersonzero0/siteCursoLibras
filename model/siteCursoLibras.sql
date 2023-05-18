@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 18/05/2023 às 02:36
+-- Tempo de geração: 18/05/2023 às 20:20
 -- Versão do servidor: 10.4.27-MariaDB
 -- Versão do PHP: 8.2.0
 
@@ -34,15 +34,32 @@ CREATE TABLE `informacoesModulos` (
   `moduloVideo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Despejando dados para a tabela `informacoesModulos`
+-- Estrutura para tabela `usuarios`
 --
 
-INSERT INTO `informacoesModulos` (`idModulo`, `identificadorModulo`, `descricaoModulo`, `moduloVideo`) VALUES
-(6, 1, 'Módulo relativo ao animal da fênix', 10),
-(7, 1, 'águia de fogo que renasceu das cinzas do inferno 	', 11),
-(8, 1, 'blá blá blá', 12),
-(9, 1, 'fez o upload?', 13);
+CREATE TABLE `usuarios` (
+  `id` int(6) UNSIGNED NOT NULL,
+  `nome` varchar(30) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `senha` varchar(50) NOT NULL,
+  `tipo` enum('administrador','usuario_comum') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `videos`
+--
+
+CREATE TABLE `videos` (
+  `id` int(11) NOT NULL,
+  `nomeVideo` varchar(60) NOT NULL,
+  `descricaoVideo` varchar(60) NOT NULL,
+  `upload` varchar(80) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Índices para tabelas despejadas
@@ -56,6 +73,18 @@ ALTER TABLE `informacoesModulos`
   ADD KEY `moduloVideo` (`moduloVideo`);
 
 --
+-- Índices de tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `videos`
+--
+ALTER TABLE `videos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT para tabelas despejadas
 --
 
@@ -63,7 +92,19 @@ ALTER TABLE `informacoesModulos`
 -- AUTO_INCREMENT de tabela `informacoesModulos`
 --
 ALTER TABLE `informacoesModulos`
-  MODIFY `idModulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idModulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de tabela `videos`
+--
+ALTER TABLE `videos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Restrições para tabelas despejadas
