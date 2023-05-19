@@ -17,29 +17,79 @@
                 </ul>
             </nav>
             <h1>Painel do Administrador</h1>
-            <form action="../controller/processingData.php" method="POST" enctype="multipart/form-data">
-                <fieldset>
-                    <legend>Configurações de Vídeo</legend>
-                    <label for="nameVideo">Nome:</label>
-                    <input type="text" name="nameVideo" id="nameVideo" maxlength="60" placeholder="Digite o nome do vídeo" required>
-                    <label for="descriptionVideo">Descrição:</label>
-                    <input type="text" name="descriptionVideo" id="descriptionVideo" maxlength="60" placeholder="Informe a descrição do vídeo" required>
-                    <label for="uploadVideo">Upload:</label>
-                    <input type="file" name="uploadVideo" id="uploadVideo" maxlength="80" placeholder="Faça o upload do vídeo" required>
-                </fieldset>
                 <fieldset>
                     <legend>Configurações de Módulo</legend>
-                    <label for="moduleIdentifier">Número de Identificação do Módulo:</label>
-                    <input type="number" name="moduleIdentifier" id="moduleIdentifier" min="1" max="100" placeholder="Digite o número do módulo" required>
-                    <label for="moduleDescription">Descrição:</label>
-                    <input type="text" name="moduleDescription" id="moduleDescription" maxlength="250" placeholder="Informe a descrição do módulo" required>
+                    <?php
+                        require "../model/connectDB.php";
+                        $sql = "SELECT id FROM modulos ORDER BY id DESC";
+                        $result = $connection->query($sql);
+                        $row = $result->fetch_assoc();
+                        if($row == null) {
+                            $idModule = 1;
+                        } else {
+                            $idModule = $row['id'] + 1;
+                        }
+                    ?>
+                    <form action="../controller/processingData.php" method="POST">
+                        <input type="hidden" name="idModule" value="<?= $idModule ?>">
+                        <p>Proximo modulo a ser criado: <?= $idModule ?></p>
+                        <label for="descricao"> Descrição: </label>
+                        <textarea name="descricao" id="descricao" cols="30" rows="5"></textarea>
+                        <input type="submit" value="Criar Modulo" name="btnSubmit">
+                    </form>
                 </fieldset>
-                <input type="submit" value="Enviar" name="sendBtn" id="sendBtn">
-            </form>
+
+
+                <fieldset>
+                    <legend>Postar videos</legend>
+
+                    <form action="../controller/enviarVideo.php" method="post" enctype="multipart/form-data">
+
+                    <label for="modulo">Modulo</label>
+
+                            <select name="modulo" id="modulo">
+                            <?php
+
+                                $sqlListModules = "SELECT * FROM modulos";
+
+                                $resultL = $connection->query($sqlListModules);
+
+                                if($resultL->num_rows == 0) {
+                            ?>
+                                    <option value="" selected disabled>Não existe modulos criados</option>
+                            <?php      
+                                } else {
+
+                                    while($rowsL = $resultL->fetch_assoc()) {
+
+                            ?>
+                                        <option value="<?= $rowsL['id'] ?>"><?= $rowsL['id'] ?></option>
+                            <?php
+                                        
+                                    }
+                                    
+                                }
+                            ?>
+                            </select>
+
+                            <label for="nome_video">Nome video:</label>
+                            <input type="text" name="nome_video" id="nome_video" required>
+
+                            <label for="descricao_video">Descrição video:</label>
+                            <textarea name="descricao_video" id="" cols="30" rows="5" required></textarea>
+
+                            <label for="src_video">Src(Upload) video:</label>
+                            <input type="file" accept="video/*" name="src_video" id="">
+
+
+                            <input type="submit" value="Enviar" name="btnSubmit">
+                         
+                    </form>
+
+                </fieldset>
         </body>
         </html>
 <?php
-        session_destroy();
     } else {
         header("location: loginForm.php");
     }

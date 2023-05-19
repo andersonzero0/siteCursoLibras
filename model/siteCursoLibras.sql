@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 18/05/2023 às 20:20
+-- Tempo de geração: 19/05/2023 às 21:36
 -- Versão do servidor: 10.4.27-MariaDB
 -- Versão do PHP: 8.2.0
 
@@ -24,14 +24,12 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `informacoesModulos`
+-- Estrutura para tabela `modulos`
 --
 
-CREATE TABLE `informacoesModulos` (
-  `idModulo` int(11) NOT NULL,
-  `identificadorModulo` int(11) DEFAULT NULL,
-  `descricaoModulo` varchar(250) NOT NULL,
-  `moduloVideo` int(11) NOT NULL
+CREATE TABLE `modulos` (
+  `id` int(11) NOT NULL,
+  `descricao` varchar(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -55,10 +53,12 @@ CREATE TABLE `usuarios` (
 --
 
 CREATE TABLE `videos` (
-  `id` int(11) NOT NULL,
-  `nomeVideo` varchar(60) NOT NULL,
-  `descricaoVideo` varchar(60) NOT NULL,
-  `upload` varchar(80) NOT NULL
+  `id_video` int(11) NOT NULL,
+  `nome_video` varchar(20) NOT NULL,
+  `descricao_video` varchar(300) NOT NULL,
+  `id_moduloFK` int(11) DEFAULT NULL,
+  `dataVideo` datetime DEFAULT NULL,
+  `src_video` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -66,11 +66,10 @@ CREATE TABLE `videos` (
 --
 
 --
--- Índices de tabela `informacoesModulos`
+-- Índices de tabela `modulos`
 --
-ALTER TABLE `informacoesModulos`
-  ADD PRIMARY KEY (`idModulo`),
-  ADD KEY `moduloVideo` (`moduloVideo`);
+ALTER TABLE `modulos`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices de tabela `usuarios`
@@ -82,39 +81,29 @@ ALTER TABLE `usuarios`
 -- Índices de tabela `videos`
 --
 ALTER TABLE `videos`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_video`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT de tabela `informacoesModulos`
+-- AUTO_INCREMENT de tabela `modulos`
 --
-ALTER TABLE `informacoesModulos`
-  MODIFY `idModulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+ALTER TABLE `modulos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- Restrições para tabelas despejadas
---
-
---
--- Restrições para tabelas `informacoesModulos`
---
-ALTER TABLE `informacoesModulos`
-  ADD CONSTRAINT `informacoesModulos_ibfk_1` FOREIGN KEY (`moduloVideo`) REFERENCES `videos` (`id`);
+  MODIFY `id_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

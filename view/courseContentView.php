@@ -1,133 +1,80 @@
 <?php
     session_start();
-    if (!empty($_SESSION['tokenAdminUser'])) {
+    if (!empty($_SESSION['tokenAdminUser']) || !empty($_SESSION['tokenCommonUser'])) {
 ?>
-        <!DOCTYPE html>
-        <html lang="pt-br">
-        <head>
-            <meta charset="UTF-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Curso de Libras</title>
-        </head>
-        <body>
-            <nav>
-                <ul>
-                    <li><a href="../controller/exit.php" target="_self" hreflang="pt-br" rel="prev">Sair da Conta Administrador</a></li>
-                    <li><a href="librasCourseSettings.php" target="_self" hreflang="pt-br" rel="prev">Editar Curso</a></li>
-                </ul>
-            </nav>
-            <main>
-                <?php
-                    require "../model/connectDB.php";
-                    $sqlCode = "SELECT * FROM videos INNER JOIN informacoesModulos ON videos.id = informacoesModulos.moduloVideo ORDER BY identificadorModulo;";
-                    $result = $connection->query($sqlCode);
-                    if ($result->num_rows > 0) {
-                        $row = $result->fetch_assoc();
-                        $moduleAmount = sizeof(array_unique((array) $row['identificadorModulo']));
-                        $counter = 1;
-                        while ($counter <= $moduleAmount) {
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <main>
+            <h1>Cursos</h1>
+
+            <?php
+
+                require "../model/connectDB.php";
+
+                $sql = "SELECT * FROM modulos";
+                $result = $connection->query($sql);
+
+                if($result->num_rows == 0) {
+
+                    echo "Nao ha modulos";
+                    
+                } else {
+
+                    while($row = $result->fetch_assoc()) {
+
                 ?>
-                            <div>
-                                <h1>Módulo <?php echo $row['identificadorModulo']; ?></h1>
-                                <p><?php echo $row['descricaoModulo']; ?></p>
-                                <?php
-                                    $querySqlCode = "SELECT * FROM videos INNER JOIN informacoesModulos ON videos.id = informacoesModulos.moduloVideo WHERE identificadorModulo = '$counter' ORDER BY identificadorModulo;";
-                                    $otherResult = $connection->query($querySqlCode); 
-                                    while ($rowResult = $otherResult->fetch_assoc()) {
-                                        if ($rowResult['identificadorModulo'] == $counter) {
-                                ?>
-                                        <div class="videoDetails">
-                                            <h2><?php echo $rowResult['nomeVideo']; ?></h2>
-                                            <p><strong>Descrição:</strong><?php echo $rowResult['descricaoVideo'] ?></p>
-                                            <video controls>
-                                                <source src="../assets/videos/<?php echo $rowResult['uploadVideo']; ?>" type="video/mp4">
-                                                <source src="../assets/videos/<?php echo $rowResult['uploadVideo']; ?>" type="video/m4v">
-                                                <source src="../assets/videos/<?php echo $rowResult['uploadVideo']; ?>" type="video/ogv">
-                                                <source src="../assets/videos/<?php echo $rowResult['uploadVideo']; ?>" type="video/webm">
-                                            </video>
-                                        </div>
-                                <?php
-                                        }
-                                    }
-                                ?>
-                            </div>
+
+                        <h2>Modulo <?= $row['id'] ?></h2>
+                        <p><?= $row['descricao'] ?></p>
+                    
                 <?php
-                            $counter++;
-                        }
+
+                $id = $row['id'];
+
+                    $sqlVideos = "SELECT * FROM videos WHERE id_video = $id";
+
+                    $resultVideo = $connection->query($sqlVideos);
+
+                    if($resultVideo->num_rows == 0) {
+
+                        echo "Nao ha videos";
+                        
                     } else {
-                ?>
-                    <p>Não há conteúdos de libras disponíveis no momento, torne-se um administrador ou contate-o para mais conteúdos!</p>
-                <?php
-                    }
-                ?>
-            </main>
-        </body>
-        </html>
-<?php
-    } else if (!empty($_SESSION['tokenCommonUser'])) {
-?>
-        <!DOCTYPE html>
-        <html lang="pt-br">
-        <head>
-            <meta charset="UTF-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Curso de Libras</title>
-        </head>
-        <body>
-            <nav>
-                <ul>
-                    <li><a href="../controller/exit.php" target="_self" hreflang="pt-br" rel="prev">Sair da Conta Usuário Comum</a></li>
-                </ul>
-            </nav>
-            <main>
-                <?php
-                    require "../model/connectDB.php";
-                    $sqlCode = "SELECT * FROM videos INNER JOIN informacoesModulos ON videos.id = informacoesModulos.moduloVideo ORDER BY identificadorModulo;";
-                    $result = $connection->query($sqlCode);
-                    if ($result->num_rows > 0) {
-                        $row = $result->fetch_assoc();
-                        $moduleAmount = sizeof(array_unique((array) $row['identificadorModulo']));
-                        $counter = 1;
-                        while ($counter <= $moduleAmount) {
-                ?>
+
+                        while($rowVideo = $resultVideo->fetch_assoc()) {
+
+                    ?>
                             <div>
-                                <h1>Módulo <?php echo $row['identificadorModulo']; ?></h1>
-                                <p><?php echo $row['descricaoModulo']; ?></p>
-                                <?php
-                                    $querySqlCode = "SELECT * FROM videos INNER JOIN informacoesModulos ON videos.id = informacoesModulos.moduloVideo WHERE identificadorModulo = '$counter' ORDER BY identificadorModulo;";
-                                    $otherResult = $connection->query($querySqlCode); 
-                                    while ($rowResult = $otherResult->fetch_assoc()) {
-                                        if ($rowResult['identificadorModulo'] == $counter) {
-                                ?>
-                                        <div class="videoDetails">
-                                            <h2><?php echo $rowResult['nomeVideo']; ?></h2>
-                                            <p><strong>Descrição:</strong><?php echo $rowResult['descricaoVideo'] ?></p>
-                                            <video controls>
-                                                <source src="../assets/videos/<?php echo $rowResult['uploadVideo']; ?>" type="video/mp4">
-                                                <source src="../assets/videos/<?php echo $rowResult['uploadVideo']; ?>" type="video/m4v">
-                                                <source src="../assets/videos/<?php echo $rowResult['uploadVideo']; ?>" type="video/ogv">
-                                                <source src="../assets/videos/<?php echo $rowResult['uploadVideo']; ?>" type="video/webm">
-                                            </video>
-                                        </div>
-                                <?php
-                                        }
-                                    }
-                                ?>
+
+                                <video style="width: 400px" controls src="../assets/videos/<?= $rowVideo['src_video'] ?>"></video>
+                                <p><?= $rowVideo['nome_video'] ?></p>
+                                <p><?= $rowVideo['descricao_video'] ?></p>
+                                
                             </div>
-                <?php
-                            $counter++;
+                    <?php
+                            
                         }
-                    } else {
-                ?>
-                        <p>Não há conteúdos de libras disponíveis no momento, torne-se um administrador ou contate-o para mais conteúdos!</p>
-                <?php
+                        
                     }
-                ?>
-            </main>
-        </body>
-        </html>
+                        
+                    }
+                    
+                }
+                
+            ?>
+            
+        </main>
+    </body>
+    </html>
+       
 <?php
     } else {
 ?>
