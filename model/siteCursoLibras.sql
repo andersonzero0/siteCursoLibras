@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 19/05/2023 às 21:36
--- Versão do servidor: 10.4.27-MariaDB
--- Versão do PHP: 8.2.0
+-- Generation Time: May 20, 2023 at 12:29 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `siteCursoLibras`
+-- Database: `siteCursoLibras`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `modulos`
+-- Table structure for table `modulos`
 --
 
 CREATE TABLE `modulos` (
@@ -32,10 +32,18 @@ CREATE TABLE `modulos` (
   `descricao` varchar(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `modulos`
+--
+
+INSERT INTO `modulos` (`id`, `descricao`) VALUES
+(1, 'IntroduÃ§Ã£o'),
+(2, 'ContinuaÃ§Ã£o');
+
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `usuarios`
+-- Table structure for table `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -46,10 +54,18 @@ CREATE TABLE `usuarios` (
   `tipo` enum('administrador','usuario_comum') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `tipo`) VALUES
+(8, 'User User', 'user@gmail.com', '12345', 'usuario_comum'),
+(9, 'adm', 'adm@gmail.com', '12345', 'administrador');
+
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `videos`
+-- Table structure for table `videos`
 --
 
 CREATE TABLE `videos` (
@@ -62,48 +78,57 @@ CREATE TABLE `videos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Índices para tabelas despejadas
+-- Dumping data for table `videos`
+--
+
+INSERT INTO `videos` (`id_video`, `nome_video`, `descricao_video`, `id_moduloFK`, `dataVideo`, `src_video`) VALUES
+(2, 'Libra 01', 'AAAAAAAAAAAAaa', 1, '2023-05-19 18:08:04', 'sgaempregos.mp4'),
+(3, 'Libra 02', 'BBBBBBBbb', 1, '2023-05-19 18:08:45', '2023-05-14_14-24-15.mp4'),
+(4, 'Libra 03', 'CCCCCCCCCC', 2, '2023-05-19 18:09:30', '2023-05-13_16-54-27.mp4');
+
+--
+-- Indexes for dumped tables
 --
 
 --
--- Índices de tabela `modulos`
+-- Indexes for table `modulos`
 --
 ALTER TABLE `modulos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `usuarios`
+-- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `videos`
+-- Indexes for table `videos`
 --
 ALTER TABLE `videos`
   ADD PRIMARY KEY (`id_video`);
 
 --
--- AUTO_INCREMENT para tabelas despejadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de tabela `modulos`
+-- AUTO_INCREMENT for table `modulos`
 --
 ALTER TABLE `modulos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de tabela `usuarios`
+-- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT de tabela `videos`
+-- AUTO_INCREMENT for table `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
