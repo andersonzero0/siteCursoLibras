@@ -8,14 +8,17 @@
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="../assets/css/style.css">
             <title>Configurações do Curso</title>
         </head>
         <body>
             <nav>
                 <ul>
-                    <li><a href="../index.php" hreflang="pt-br" target="_self" rel="prev">Página Inicial</a></li>
+                    <li> <i icon-name="home"></i><a href="../index.php" hreflang="pt-br" target="_self" rel="prev"> Página Inicial</a></li>
                 </ul>
             </nav>
+
+            <main class="main_adm">
             <h1>Painel do Administrador</h1>
                 <fieldset>
                     <legend>Configurações de Módulo</legend>
@@ -35,7 +38,7 @@
                         <p>Proximo modulo a ser criado: <?= $idModule ?></p>
                         <label for="descricao"> Descrição: </label>
                         <textarea name="descricao" id="descricao" cols="30" rows="5"></textarea>
-                        <input type="submit" value="Criar Modulo" name="btnSubmit">
+                        <input class="btnEnviar" type="submit" value="Criar Modulo" name="btnSubmit">
                     </form>
                 </fieldset>
 
@@ -82,11 +85,17 @@
                             <input type="file" accept="video/*" name="src_video" id="">
 
 
-                            <input type="submit" value="Enviar" name="btnSubmit">
+                            <input class="btnEnviar" type="submit" value="Enviar" name="btnSubmit">
                          
                     </form>
 
                 </fieldset>
+                </main>
+
+                <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
         </body>
         </html>
 <?php

@@ -9,17 +9,19 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../assets/css/style.css">
         <title>Document</title>
     </head>
     <body>
-        <main>
-            <h1>Cursos</h1>
+        <?php include "header.php" ?>
+        <main class="main_curso">
+            <h1 class="h1_cursos">CURSO</h1>
 
             <?php
 
                 require "../model/connectDB.php";
 
-                $sql = "SELECT * FROM modulos";
+                $sql = "SELECT * FROM modulos   ";
                 $result = $connection->query($sql);
 
                 if($result->num_rows == 0) {
@@ -32,14 +34,18 @@
 
                 ?>
 
-                        <h2>Modulo <?= $row['id'] ?></h2>
-                        <p><?= $row['descricao'] ?></p>
+                        <div class="div_module">
+                            <h2 class="">Módulo <?= $row['id'] ?></h2>
+                        </div>
+                        
+                        <div class="conteiner_videos">
+                            <p><?= $row['descricao'] ?></p>
                     
                 <?php
 
                 $id = $row['id'];
 
-                    $sqlVideos = "SELECT * FROM videos WHERE id_video = $id";
+                    $sqlVideos = "SELECT * FROM videos WHERE id_moduloFK = $id";
 
                     $resultVideo = $connection->query($sqlVideos);
 
@@ -52,11 +58,16 @@
                         while($rowVideo = $resultVideo->fetch_assoc()) {
 
                     ?>
-                            <div>
+                            <div class="conteiner_video">
 
-                                <video style="width: 400px" controls src="../assets/videos/<?= $rowVideo['src_video'] ?>"></video>
-                                <p><?= $rowVideo['nome_video'] ?></p>
-                                <p><?= $rowVideo['descricao_video'] ?></p>
+                                <div>
+                                    <video poster="../assets/image/background.jpg" class="video_elem" controls src="../assets/videos/<?= $rowVideo['src_video'] ?>"></video>
+                                </div>
+
+                                <div>
+                                    <p class="title_video"><?= $rowVideo['nome_video'] ?></p>
+                                    <p class="desc_video"><?= $rowVideo['descricao_video'] ?></p>
+                                </div>
                                 
                             </div>
                     <?php
@@ -64,6 +75,11 @@
                         }
                         
                     }
+                    ?>
+
+                        </div>
+                    
+                    <?php
                         
                     }
                     
@@ -72,6 +88,11 @@
             ?>
             
         </main>
+
+        <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
     </body>
     </html>
        
